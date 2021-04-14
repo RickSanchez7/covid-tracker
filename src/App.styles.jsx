@@ -31,10 +31,10 @@ export const AppStats = styled.div`
 `;
 
 export const H1 = styled.h1`
+  color: ${({ theme }) => theme.colors.primary};
   @media (max-width: 990px) {
     font-size: 26px;
     margin-bottom: 10px;
-    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
