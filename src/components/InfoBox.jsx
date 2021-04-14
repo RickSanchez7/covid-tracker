@@ -1,23 +1,33 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@material-ui/core';
 
-const InfoBox = ({ title, cases, total }) => (
-  <Card className="infoBox">
-    <CardContent>
+import {
+  StyledCard,
+  MyTypography,
+  NumberOfCases,
+  MyFaCog,
+  StyledCardContent,
+} from './InfoBox.styles';
+
+const InfoBox = ({ title, isred, isgrey, active, cases, total, ...props }) => (
+  <StyledCard
+    onClick={props.onClick}
+    active={active ? 1 : 0}
+    isred={isred ? 1 : 0}
+    isgrey={isgrey ? 1 : 0}
+  >
+    <StyledCardContent>
       {/* Title */}
-      <Typography className="infoBox__title" color="textSecondary">
-        {title}
-      </Typography>
+      <MyTypography total="true">{title}</MyTypography>
 
-      {/* +120k Number of cases */}
-      <h2 className="infoBox__cases">{cases}</h2>
+      {/* Number of Cases */}
+      <NumberOfCases isred={isred ? 1 : 0} isgrey={isgrey ? 1 : 0}>
+        {props.isloading ? <MyFaCog /> : cases}
+      </NumberOfCases>
 
-      {/*   1.2M Total */}
-      <Typography className="infoBox__total" color="textSecondary">
-        {total} Total
-      </Typography>
-    </CardContent>
-  </Card>
+      {/* Total Cases */}
+      <MyTypography color="textSecondary">{total} Total</MyTypography>
+    </StyledCardContent>
+  </StyledCard>
 );
 
 export default InfoBox;

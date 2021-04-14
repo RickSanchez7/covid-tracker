@@ -1,26 +1,37 @@
 import React, { useEffect, useState } from 'react';
 
-import {
-  Card,
-  CardContent,
-  FormControl,
-  MenuItem,
-  Select,
-} from '@material-ui/core';
+import { CardContent, FormControl, MenuItem, Select } from '@material-ui/core';
 import axios from 'axios';
 
 import InfoBox from './components/InfoBox';
 import Map from './components/Map';
 import Table from './components/Table';
+import LineGraph from './components/LineGraph';
 import { sortData } from './utils/sortData';
+import { prettyPrintStat } from './utils/prettyPrintStat';
 
-import './App.css';
+import {
+  AppContainer,
+  AppGraphTitle,
+  AppHeader,
+  AppLeftContainer,
+  AppRightContainer,
+  AppStats,
+  H1,
+  H3,
+} from './App.styles';
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('worldwide');
   const [countryInfo, setCountryInfo] = useState({});
+  const [countryName, setCountryName] = useState('Worldwide');
   const [tableData, setTableData] = useState([]);
+  const [casesType, setCasesType] = useState('cases');
+  const [mapCenter, setMapCenter] = useState([34.80746, -40.4796]);
+  const [zoom, setZoom] = useState(3);
+  const [mapCountries, setMapCountries] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     // Initial data load
@@ -46,12 +57,17 @@ function App() {
 
       setTableData(sortedData);
       setCountries(countriesInfo);
+      setMapCountries(data);
     };
     getCountriesData();
   }, []);
 
   const onCountryChange = async (e) => {
+    setLoading(true);
+
     const countryCode = e.target.value;
+
+    setCountryName(e.currentTarget.textContent);
 
     setCountry(countryCode);
 
@@ -65,13 +81,20 @@ function App() {
 
     // all the data from country selected
     setCountryInfo(await data);
+    setLoading(false);
+
+    // console.log(data);
+    if (countryCode === 'worldwide') setMapCenter([34.80746, -40.4796]);
+    else setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+
+    setZoom(4);
   };
 
   return (
-    <div className="app">
-      <div className="app__left">
-        <div className="app__header">
-          <h1>COVID-19 TRACKER</h1>
+    <AppContainer>
+      <AppLeftContainer>
+        <AppHeader>
+          <H1>COVID-19 TRACKER</H1>
           <FormControl className="app__dropdown">
             <Select
               variant="outlined"
@@ -86,39 +109,61 @@ function App() {
               ))}
             </Select>
           </FormControl>
-        </div>
-        <div className="app__stats">
+        </AppHeader>
+        <AppStats>
           <InfoBox
-            title="Coronavirus Daily Cases"
-            cases={countryInfo.todayCases}
-            total={countryInfo.cases}
+            isred
+            active={casesType === 'cases'}
+            // className="infoBox__cases"
+            onClick={() => setCasesType('cases')}
+            title="Coronavirus Cases"
+            total={prettyPrintStat(countryInfo.cases)}
+            cases={prettyPrintStat(countryInfo.todayCases)}
+            isloading={isLoading}
           />
 
           <InfoBox
+            active={casesType === 'recovered'}
+            className="infoBox__recovered"
+            onClick={() => setCasesType('recovered')}
             title="Recovered"
-            cases={countryInfo.todayRecovered}
-            total={countryInfo.recovered}
+            total={prettyPrintStat(countryInfo.recovered)}
+            cases={prettyPrintStat(countryInfo.todayRecovered)}
+            isloading={isLoading}
           />
 
           <InfoBox
+            isgrey
+            active={casesType === 'deaths'}
+            className="infoBox__deaths"
+            onClick={() => setCasesType('deaths')}
             title="Deaths"
-            cases={countryInfo.todayDeaths}
-            total={countryInfo.deaths}
+            total={prettyPrintStat(countryInfo.deaths)}
+            cases={prettyPrintStat(countryInfo.todayDeaths)}
+            isloading={isLoading}
           />
-        </div>
+        </AppStats>
 
         {/* Map */}
-        <Map />
-      </div>
-      <Card className="app__right">
+        <Map
+          countries={mapCountries}
+          center={mapCenter}
+          zoom={zoom}
+          casesType={casesType}
+        />
+      </AppLeftContainer>
+      <AppRightContainer>
         <CardContent>
-          <h3>Live Cases by Country</h3>
+          <H3>Live Cases by Country</H3>
           <Table countries={tableData} />
-          <h3>Worldwide new cases</h3>
+          <AppGraphTitle>
+            {countryName} new {casesType}
+          </AppGraphTitle>
           {/* Graph */}
+          <LineGraph casesType={casesType} country={country} />
         </CardContent>
-      </Card>
-    </div>
+      </AppRightContainer>
+    </AppContainer>
   );
 }
 
