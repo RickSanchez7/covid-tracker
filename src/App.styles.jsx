@@ -1,27 +1,30 @@
 import styled from 'styled-components';
-import { Card } from '@material-ui/core';
+import { Card, FormControl, MenuItem, Select } from '@material-ui/core';
 
 export const AppContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-  padding: 20px;
+  padding: ${({ theme }) => theme.size.xl};
 
   @media (max-width: 990px) {
     flex-direction: column;
   }
 `;
+
 export const AppHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: ${({ theme }) => theme.size.xl};
   @media (max-width: 990px) {
     flex-direction: column;
   }
 `;
+
 export const AppLeftContainer = styled.div`
   flex: 0.9;
 `;
+
 export const AppStats = styled.div`
   display: flex;
   justify-content: space-between;
@@ -32,26 +35,42 @@ export const AppStats = styled.div`
 
 export const H1 = styled.h1`
   color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.size.xxxl};
   @media (max-width: 990px) {
-    font-size: 26px;
-    margin-bottom: 10px;
+    margin-bottom: ${({ theme }) => theme.size.xsm};
   }
 `;
 
 export const H3 = styled.h3`
   color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.size.lg};
 `;
 
 export const AppRightContainer = styled(Card)`
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  @media (max-width: 990px) {
+    margin-top: ${({ theme }) => theme.size.sm};
+  }
+`;
+
+export const StyledFormControl = styled(FormControl)`
+  background: ${({ theme }) => theme.colors.white};
+`;
+
+export const StyledMenuItem = styled(MenuItem)`
+  font-size: ${({ theme }) => theme.size.md} !important;
+`;
+
+export const StyledSelect = styled(Select)`
+  font-size: ${({ theme }) => theme.size.md} !important;
 `;
 
 export const AppGraphTitle = styled.h3`
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: ${({ theme }) => theme.size.xl};
+  margin-bottom: ${({ theme }) => theme.size.xl};
   color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.size.lg};
 `;
 
 export const AppGraph = styled.div`

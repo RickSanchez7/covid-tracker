@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { CardContent, FormControl, MenuItem, Select } from '@material-ui/core';
+import { CardContent } from '@material-ui/core';
 import axios from 'axios';
 
 import InfoBox from './components/InfoBox';
@@ -19,6 +19,9 @@ import {
   AppStats,
   H1,
   H3,
+  StyledFormControl,
+  StyledSelect,
+  StyledMenuItem,
 } from './App.styles';
 
 function App() {
@@ -95,20 +98,20 @@ function App() {
       <AppLeftContainer>
         <AppHeader>
           <H1>COVID-19 TRACKER</H1>
-          <FormControl className="app__dropdown">
-            <Select
+          <StyledFormControl>
+            <StyledSelect
               variant="outlined"
               onChange={onCountryChange}
               value={country}
             >
-              <MenuItem value="worldwide">Worldwide</MenuItem>
+              <StyledMenuItem value="worldwide">Worldwide</StyledMenuItem>
               {countries.map((c) => (
-                <MenuItem key={c.name} value={c.value}>
+                <StyledMenuItem key={c.name} value={c.value}>
                   {c.name}
-                </MenuItem>
+                </StyledMenuItem>
               ))}
-            </Select>
-          </FormControl>
+            </StyledSelect>
+          </StyledFormControl>
         </AppHeader>
         <AppStats>
           <InfoBox

@@ -15,7 +15,7 @@ export const StyledCard = styled(Card)`
     :not(:last-of-type) {
       margin-right: unset;
     }
-    margin-bottom: 10px;
+    margin-bottom: ${({ theme }) => theme.size.sm};
     border-top: ${({ active }) => active && '5px solid greenyellow'};
     border-color: ${({ isred }) => isred && 'red'};
     border-color: ${({ isgrey }) => isgrey && 'grey'};
@@ -25,29 +25,25 @@ export const StyledCard = styled(Card)`
 export const StyledCardContent = styled(CardContent)`
   @media (max-width: 990px) {
     text-align: center;
-    padding: 5px !important;
-    padding-bottom: 5px !important;
+    padding: ${({ theme }) => theme.size.xxsm} !important;
+    padding-bottom: ${({ theme }) => theme.size.xxsm} !important;
   }
 `;
 
 export const MyTypography = styled(Typography)`
   color: ${({ total, theme }) => total && theme.colors.grey};
   font-weight: ${({ total }) => total && '600'} !important;
-  font-size: ${({ total }) => total && '1.1rem'} !important;
+  font-size: ${({ total, theme }) =>
+    total ? theme.size.md : theme.size.sm} !important;
 `;
 
 export const NumberOfCases = styled.h2`
   color: ${({ theme }) => theme.colors.red};
   font-weight: 600;
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
+  font-size: ${({ theme }) => theme.size.xl};
+  margin-bottom: ${({ theme }) => theme.size.xxsm};
   color: ${({ isred }) => !isred && 'lightgreen'};
   color: ${({ isgrey }) => isgrey && 'grey'};
-
-  @media (max-width: 990px) {
-    font-size: 1.25rem;
-    margin-bottom: 0.25rem;
-  }
 `;
 
 const rotating = keyframes`

@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 export const TableContainer = styled.div`
   overflow-y: scroll;
-  height: 450px;
-  margin-top: 20px;
+  height: 45rem;
+  margin-top: ${({ theme }) => theme.size.md};
 
   @media screen and (max-width: 990px) {
-    height: 350px;
+    height: 35rem;
   }
 `;
 
 export const StyledTable = styled.table`
-  color: #6a5d5d;
+  color: ${({ theme }) => theme.colors.grey};
   background-color: white;
   width: 100%;
 `;
@@ -26,4 +26,5 @@ export const StyledTr = styled.tr`
 
 export const StyledTd = styled.td`
   padding: 0.5rem 0.75rem;
+  font-size: ${({ theme }) => theme.size.sm};
 `;
