@@ -22,7 +22,7 @@ export const InfoTitle = styled.span`
 export const InfoName = styled.div`
   font-size: ${({ theme }) => theme.size.xl};
   font-weight: bold;
-  color: ${({ theme }) => theme.color.grey_2};
+  color: ${({ theme }) => theme.colors.grey_2};
   margin-top: ${({ theme }) => theme.size.xxsm};
 `;
 
